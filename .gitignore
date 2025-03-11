@@ -1,0 +1,53 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Virtual environment
+venv/
+.env
+*.env
+
+# Flask / Python cache
+instance/
+*.log
+*.sqlite3
+db.sqlite3
+*.db
+
+# Pip dependency cache
+pip-log.txt
+pip-delete-this-directory.txt
+
+# Jupyter Notebook checkpoints
+.ipynb_checkpoints
+
+# VS Code
+.vscode/
+
+# Audio files
+*.wav
+*.mp3
+*.flac
+*.m4a
+*.ogg
+*.aac
+
+# Spleeter-related files and folders
+output/*
+!output/.gitkeep
+!uploads/.gitkeep
+pretrained_models/
+spleeter/*.pkl
+spleeter/*.h5
+spleeter/*.json
+spleeter/temp/
+
+# Docker
+*.dockerignore
+docker-compose.override.yml
+
+# OS files
+.DS_Store
+Thumbs.db

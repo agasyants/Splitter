@@ -1,0 +1,91 @@
+.stems {
+    background-color: yellow;
+    border-radius: 20px;
+    margin: 20px;
+}
+.stem {
+    margin: 16px;
+    padding: 6px;
+    border-radius: 6px;
+    background-color: black;
+    font-size: 24px;
+    font-family: Verdana, sans-serif;;
+    color: white;
+}
+#header {
+    margin: 14px;
+    font-size: 40px;
+    font-family: Verdana, sans-serif;;
+}
+#left {
+    display: flex; 
+    flex-direction: column;
+    background-color: yellow;
+    border-radius: 20px;
+    margin: 20px;
+    width: 300px;
+}
+#stems {
+    margin: 16px;
+    padding: 6px;
+    border-radius: 6px;
+    cursor: pointer;
+    background-color: black;
+    font-size: 16px;
+    font-family: Verdana, sans-serif;;
+    color: white;
+}
+#submit_button {
+    margin: 16px;
+    padding: 6px;
+    border-radius: 6px;
+    cursor: pointer;
+    background-color: black;
+    font-size: 16px;
+    font-family: Verdana, sans-serif;;
+    color: white;
+}
+#submit_button:hover {
+    background-color: darkblue;
+}
+#submit_button:active {
+    background-color: red;
+}
+#file {
+    margin-left: 16px;
+    margin-right: 16px;
+    padding: 8px;
+    height: 200px;
+    border-radius: 6px;
+    cursor: pointer;
+    background-color: black;
+    font-size: 16px;
+    font-family: Verdana, sans-serif;;
+    color: white;
+}
+#file::file-selector-button {
+    display: none;
+}
+#loader {
+    margin: 50px;
+    border: 6px solid black;
+    border-radius: 50%;
+    border-top: 6px solid white;
+    border-bottom: 6px solid white;
+    width: 60px;
+    height: 60px;
+    align-items: center;
+}
+.anim {
+    /* -webkit-animation: spin 2s linear infinite; */
+    animation: spin 1s linear infinite;
+}
+/* @-webkit-keyframes spin {
+    0% { -webkit-transform: rotate(0deg); }
+    100% { -webkit-transform: rotate(360deg); }
+} */
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
