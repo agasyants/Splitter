@@ -39,10 +39,11 @@ window.addEventListener('load', () => {
     choice.addEventListener('change', (e) => {
         changeStems(e.target.value);
     });
-
-    const file = document.getElementById('file');
-    file.addEventListener('change', (e) => {
-        console.log(e.target.files[0].name.slice(0, -4));
+    const waveformCanvas = document.getElementById("waveformCanvas");
+    // waveformCanvas.height = 100;
+    // waveformCanvas.width = 200;
+    document.getElementById("file").addEventListener("change", (e) => {
+        const inTrack = new TrackDrawer(waveformCanvas, e.target.files[0])
     });
 })
 
@@ -66,5 +67,72 @@ function addLinks(stems, filename){
         stem.addEventListener("click", function() {
             window.location.href = "/output/" + filename + "/" + stem.id + ".wav";
         });
+    }
+}
+
+class TrackDrawer {
+    samples = 80;
+    constructor(canvas, file) {
+        this.canvas = canvas;
+        this.file = file;
+        this.ctx = this.canvas.getContext('2d');
+        this.width = canvas.width;
+        this.height = canvas.height;
+        this.fileUpload();
+    }
+    async fileUpload() {
+        if (!this.file) return;
+    
+        const arrayBuffer = await this.file.arrayBuffer();
+        const audioContext = new (window.AudioContext || window.webkitAudioContext)();
+        const buffer = await audioContext.decodeAudioData(arrayBuffer);
+    
+        const rawData = buffer.getChannelData(0); // Левый канал
+        const blockSize = Math.floor(rawData.length / this.samples); // Количество фреймов на каждую точку
+        this.reducedData = new Float32Array(this.samples);
+
+        this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+
+        for (let i = 0; i < this.samples; i++) {
+            let sum = 0;
+            for (let j = 0; j < blockSize; j++) {
+                sum += Math.abs(rawData[i * blockSize + j]); // Усредняем амплитуду
+            }
+            this.reducedData[i] = sum / blockSize;
+        }
+        this.speed = 20;
+        this.animationFrameId = null;
+        this.ctx.lineWidth = 3;
+        this.ctx.strokeStyle = "black";
+        this.render(0);
+    }
+    draw() {
+        ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+        this.ctx.beginPath();
+        for (let i = 0; i < this.samples; i++) {
+            const x = (i / this.samples) * this.width;
+            const yMin = this.height / 2 - this.reducedData[i] * (this.height);
+            const yMax = this.height / 2 + this.reducedData[i] * (this.height);
+            this.ctx.moveTo(x, yMin);
+            this.ctx.lineTo(x, yMax);
+        }
+        this.ctx.closePath();
+        this.ctx.stroke();
+    }
+    render(currentIndex) {
+        if (currentIndex < this.samples) {
+            const sample = this.reducedData[currentIndex]*this.height*1.5;
+            const x = (currentIndex / this.samples) * this.width;
+            const yMin = this.height / 2 - sample;
+            const yMax = this.height / 2 + sample;
+
+            this.ctx.beginPath();
+            this.ctx.moveTo(x, yMin);
+            this.ctx.lineTo(x, yMax);
+            this.ctx.stroke();
+
+            currentIndex++;
+            setTimeout(this.render.bind(this, currentIndex), this.speed);
+        }
     }
 }
