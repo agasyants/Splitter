@@ -12,10 +12,11 @@ def index():
 def upload():
     if request.method == 'POST':
         file = request.files['file']
-        file.name = file.name.replace(' ', '')
+        file.name = file.name.replace(' ', '') + str(len(os.listdir("uploads")))
         file.save(os.path.join('uploads', file.filename))
         print('going')
         os.system('spleeter separate -p spleeter:' + request.form['choice'] + 'stems -o output '+ os.path.join('uploads', file.filename))
+        os.remove(os.path.join('uploads', file.filename))
         return {'success': True, 'stems': request.form['choice']}
     return {'success': False, 'stems': 0}
 
