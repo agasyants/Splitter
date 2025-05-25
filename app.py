@@ -7,18 +7,18 @@ app.config['UPLOAD_FOLDER'] = 'uploads'
 @app.route('/', methods=['GET'])
 def index():
     return render_template('index.html')
-
+ 
 @app.route('/upload', methods=['POST'])
 def upload():
     if request.method == 'POST':
         file = request.files['file']
-        file.name = file.name.replace(' ', '') + str(len(os.listdir("uploads")))
+        file.filename = file.filename.replace(' ', '').replace(".", str(len(os.listdir("uploads")))+".")
         file.save(os.path.join('uploads', file.filename))
         print('going')
         os.system('spleeter separate -p spleeter:' + request.form['choice'] + 'stems -o output '+ os.path.join('uploads', file.filename))
         os.remove(os.path.join('uploads', file.filename))
-        return {'success': True, 'stems': request.form['choice']}
-    return {'success': False, 'stems': 0}
+        return {'success': file.filename, 'stems': request.form['choice']}
+    return {'success': '', 'stems': 0}
 
 @app.route('/output/<directory>/<name>')
 def download_file(directory, name):

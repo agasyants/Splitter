@@ -3,72 +3,113 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title> Splitter </title>
+    <title>Audio Splitter</title>
     <script src="{{ url_for('static', filename='main.js') }}"></script>
     <link rel="stylesheet" href="{{ url_for('static', filename='main.css') }}">
 </head>
-<body style="background-color: black; margin: 0; border-color: black;" >
-    <div style="display: flex; flex: 0 0 50px; background-color: yellow;">
-        <p id="header"> SPLITTER </p>
-    </div>
-    <!-- {% if success %}
-        <h1>Downloaded</h1>
-    {% endif %} -->
-    <div style="display: flex;">
-        <form method="post" enctype="multipart/form-data" id="upload_form">
-            <div id="left">
-                <select name="choice" id="stems">
-                    <option value="2"> 2 stems </option>
-                    <option value="4"> 4 stems </option>
-                    <option value="5"> 5 stems </option>
-                </select>
-                <input id="file" type="file" name="file" accept=".mp3, .wav" required>
-                <canvas id="waveformCanvas"></canvas>
-                <button id="submit_button"> Submit </button>
-            </div>
-        </form>
-        <div id="loader"></div>
-        <div style="display:flex; flex-direction:column; gap: 10px;">
-            <div class="stems" id="2">
-                <div class="stem" id="vocals">
-                    Vocal
-                </div>
-                <div class="stem" id="accompaniment">
-                    Instrumental
-                </div>
-            </div>
-            <div class="stems" id="4">
-                <div class="stem" id="vocals">
-                    Vocal
-                </div>
-                <div class="stem" id="drums">
-                    Drums
-                </div>
-                <div class="stem" id="bass">
-                    Bass
-                </div>
-                <div class="stem" id="other">
-                    Other
-                </div>
-            </div>
-            <div class="stems" id="5">
-                <div class="stem" id="vocals">
-                    Vocal
-                </div>
-                <div class="stem" id="drums">
-                    Drums
-                </div>
-                <div class="stem" id="bass">
-                    Bass
-                </div>
-                <div class="stem" id="piano">
-                    Piano
-                </div>
-                <div class="stem" id="other">
-                    Other
-                </div>
-            </div>
+<body>
+    <div class="container">
+        <header class="header">
+            <h1>AUDIO SPLITTER</h1>
+            <p>Separate your music into individual stems</p>
+        </header>
+        
+        <main class="main-content">
+            <div class="upload-section">
+                <form method="post" enctype="multipart/form-data" id="upload_form">
+                    <div class="controls">
+                        <div class="select-wrapper">
+                            <select name="choice" id="stems">
+                                <option value="2">2 stems</option>
+                                <option value="4">4 stems</option>
+                                <option value="5">5 stems</option>
+                            </select>
+                        </div>
+
+    <!-- Полноэкранный лоадер -->
+    <div id="fullscreen-loader" class="fullscreen-loader">
+        <div class="loader-content">
+            <div class="loader-spinner"></div>
+            <h3>Processing your audio...</h3>
+            <p>This may take a few minutes</p>
         </div>
+    </div>
+                        
+                        <div class="file-upload">
+                            <input id="file" type="file" name="file" accept=".mp3, .wav" required>
+                            <label for="file" class="file-label">
+                                <span class="file-icon">📁</span>
+                                Choose audio file
+                            </label>
+                        </div>
+                        
+                        <canvas id="waveformCanvas"></canvas>
+                        
+                        <button id="submit_button" type="submit">Process Audio</button>
+                    </div>
+                </form>
+                
+
+            </div>
+            
+            <div class="stems-section">
+                <div class="stems-group" id="2">
+                    <h3>Output Stems</h3>
+                    <div class="stem-item" id="vocals">
+                        <span class="stem-icon">🎤</span>
+                        <span>Vocals</span>
+                    </div>
+                    <div class="stem-item" id="accompaniment">
+                        <span class="stem-icon">🎵</span>
+                        <span>Instrumental</span>
+                    </div>
+                </div>
+                
+                <div class="stems-group" id="4">
+                    <h3>Output Stems</h3>
+                    <div class="stem-item" id="vocals">
+                        <span class="stem-icon">🎤</span>
+                        <span>Vocals</span>
+                    </div>
+                    <div class="stem-item" id="drums">
+                        <span class="stem-icon">🥁</span>
+                        <span>Drums</span>
+                    </div>
+                    <div class="stem-item" id="bass">
+                        <span class="stem-icon">🎸</span>
+                        <span>Bass</span>
+                    </div>
+                    <div class="stem-item" id="other">
+                        <span class="stem-icon">🎹</span>
+                        <span>Other</span>
+                    </div>
+                </div>
+                
+                <div class="stems-group" id="5">
+                    <h3>Output Stems</h3>
+                    <div class="stem-item" id="vocals">
+                        <span class="stem-icon">🎤</span>
+                        <span>Vocals</span>
+                    </div>
+                    <div class="stem-item" id="drums">
+                        <span class="stem-icon">🥁</span>
+                        <span>Drums</span>
+                    </div>
+                    <div class="stem-item" id="bass">
+                        <span class="stem-icon">🎸</span>
+                        <span>Bass</span>
+                    </div>
+                    <div class="stem-item" id="piano">
+                        <span class="stem-icon">🎹</span>
+                        <span>Piano</span>
+                    </div>
+                    <div class="stem-item" id="other">
+                        <span class="stem-icon">🎼</span>
+                        <span>Other</span>
+                    </div>
+                </div>
+            </div>
+        </main>
     </div>
 </body>
 </html>
